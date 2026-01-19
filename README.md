@@ -38,26 +38,6 @@ A Zigbee router is a **mains-powered device** that:
 - ✅ Improves stability and reliability
 - ✅ Connects battery-powered devices (End Devices) to the Coordinator
 
-> **💡 Important:** To add the router to your Zigbee network, you need to enable **pairing mode** (permit join) on your Coordinator. Once pairing is enabled, the ESP32-C6 will automatically search and connect. No network credentials are needed!
-
-### 🔐 ESPHome Secrets (Optional)
-
-The `secrets.yaml` file is only needed if you want to enable WiFi:
-
-| Key | Description | Required |
-|-----|-------------|----------|
-| **wifi_ssid** | Your WiFi network name | ❌ Optional (only with WiFi) |
-| **wifi_password** | Your WiFi password | ❌ Optional (only with WiFi) |
-| **api_encryption_key** | API key for Home Assistant | ❌ Optional (only with WiFi + HA) |
-
-> **🎉 Zigbee works without WiFi!** WiFi is only needed for:
-> - OTA updates over the network
-> - Home Assistant API integration
-> - Web interface
-> - Remote logging
-
----
-
 ## 🚀 Installation
 
 ### 📝 Step 1: Configure Settings (Optional)
@@ -270,40 +250,6 @@ To flash multiple ESP32-C6 devices and use them as separate routers in the same 
 ### 1. Create Device-Specific Configuration Files
 
 For each additional device, create a new YAML file (e.g., `esp32-c6-zigbee-router-2.yaml`):
-
-```yaml
-substitutions:
-  device_name: esp32-c6-zigbee-router-2      # Must be unique!
-  friendly_name: ESP32-C6 Zigbee Router 2    # Optional but helpful
-
-esphome:
-  name: ${device_name}
-  friendly_name: ${friendly_name}
-
-esp32:
-  board: esp32-c6-devkitc-1
-  variant: esp32c6
-  framework:
-    type: esp-idf
-    version: recommended
-    sdkconfig_options:
-      CONFIG_FREERTOS_UNICORE: "n"
-      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
-  partitions: partitions_zb.csv
-
-external_components:
-  - source: github://luar123/zigbee_esphome
-    components: [zigbee]
-
-zigbee:
-  id: zb
-  router: true  # All devices as routers
-  manufacturer: "esphome"
-  name: "${device_name}"
-
-logger:
-  level: DEBUG
-```
 
 ### 2. Flash Additional Devices
 
