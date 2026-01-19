@@ -112,6 +112,9 @@ ls -la /dev/ttyACM0
 
 # Fix temporarily (resets on USB reconnect)
 sudo chmod 666 /dev/ttyACM0
+
+# If using Docker/Podman, restart the container
+docker-compose restart
 ```
 
 > ⚠️ **Note:** You need to run `sudo chmod 666` each time you reconnect the USB device.
