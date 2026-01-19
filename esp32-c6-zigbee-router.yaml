@@ -1,0 +1,70 @@
+substitutions:
+  device_name: esp32-c6-zigbee-router
+  friendly_name: ESP32-C6 Zigbee Router
+
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+
+esp32:
+  board: esp32-c6-devkitc-1
+  variant: esp32c6
+  framework:
+    type: esp-idf
+    version: recommended
+    sdkconfig_options:
+      CONFIG_FREERTOS_UNICORE: "n"
+      CONFIG_ESP_TASK_WDT_TIMEOUT_S: "10"
+  
+  # Custom Partition Table for Zigbee
+  partitions: partitions_zb.csv
+
+# External component for Zigbee
+external_components:
+  - source: github://luar123/zigbee_esphome
+    components: [zigbee]
+
+# Zigbee configuration as Router
+zigbee:
+  id: zb
+  router: true  # Configure as Router
+  manufacturer: "esphome"
+  name: "${device_name}"
+
+# Logger
+logger:
+  level: DEBUG
+
+# OTA Updates via USB
+# For OTA via WiFi: enable WiFi + ota section below
+# ota:
+#   - platform: esphome
+
+# ============================================
+# WiFi is OPTIONAL for Zigbee Router!
+# Only enable if you need:
+# - OTA Updates via WiFi
+# - Home Assistant Integration
+# - Web Interface
+# - Remote Logging
+# ============================================
+
+# Without WiFi:
+# - USB only for logs and updates
+# - Lower power consumption
+# - Router works completely autonomous
+
+# Enable WiFi (uncomment lines):
+# wifi:
+#   ssid: !secret wifi_ssid
+#   password: !secret wifi_password
+#   # IMPORTANT: NO ap: mode! Incompatible with Zigbee!
+
+# Web Server (only with WiFi):
+# web_server:
+#   port: 80
+
+# Home Assistant API (only with WiFi):
+# api:
+#   encryption:
+#     key: !secret api_encryption_key
