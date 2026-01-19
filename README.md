@@ -290,8 +290,8 @@ esphome run esp32-c6-zigbee-router-2.yaml --device=/dev/ttyACM0
 
 <div align="center">
 
-**Made with ❤️ for the smart home community**
+**Made by the open source community**
 
-⭐ Star us on GitHub • 🐛 [Report a Bug](https://github.com/luar123/zigbee_esphome/issues) • 💡 [Request a Feature](https://github.com/luar123/zigbee_esphome/issues)
+⭐ Star us on [GitHub](https://github.com/firsttris/esp32c6-zigbee-router) • 🐛 [Report a Bug](https://github.com/firsttris/esp32c6-zigbee-router/issues) • 💡 [Request a Feature](https://github.com/firsttris/esp32c6-zigbee-router/issues)
 
 </div>
