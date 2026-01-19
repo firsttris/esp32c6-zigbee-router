@@ -1,8 +1,8 @@
+<div align="center">
+
 # 📡 ESP32-C6 Zigbee Router
 
 **Extend Your Zigbee Network Coverage with an Affordable ESP32-C6!**
-
-<div align="center">
 
 <img src="./zigbee-router-image.jpg" alt="ESP32-C6 Zigbee Router" width="600">
 
