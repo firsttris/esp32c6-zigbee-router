@@ -1,0 +1,38 @@
+name: Build
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Weekly, to notice when a new ESPHome release breaks the config
+    - cron: "17 4 * * 1"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Validate config
+        run: esphome config esp32-c6-zigbee-router.yaml
+
+      # ESP-IDF and toolchains are downloaded to ~/.cache/esphome
+      - name: Cache ESPHome toolchain
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/esphome
+            ~/.platformio
+          key: esphome-${{ runner.os }}-${{ hashFiles('esp32-c6-zigbee-router.yaml') }}
+          restore-keys: esphome-${{ runner.os }}-
+
+      - name: Compile firmware
+        run: esphome compile esp32-c6-zigbee-router.yaml
