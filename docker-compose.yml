@@ -1,14 +1,15 @@
-version: '3'
 services:
   esphome:
     container_name: esphome
-    image: ghcr.io/esphome/esphome:latest
+    image: ghcr.io/esphome/esphome:stable
     volumes:
-      - /home/tristan/Projects/esphome/config:/config
+      # This repository is mounted as /config
+      - ./:/config
       - /etc/localtime:/etc/localtime:ro
-    restart: always
-    privileged: true
+    # USB device used for the first flash. Override with ESPHOME_DEVICE=/dev/ttyUSB0 docker compose up -d
+    # The device must be plugged in when the container starts.
+    devices:
+      - ${ESPHOME_DEVICE:-/dev/ttyACM0}:${ESPHOME_DEVICE:-/dev/ttyACM0}
+    # Host networking is needed for mDNS discovery and the dashboard on port 6052
     network_mode: host
-    environment:
-      - USERNAME=test
-      - PASSWORD=test
+    restart: unless-stopped
