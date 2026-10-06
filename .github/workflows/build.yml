@@ -2,14 +2,23 @@ name: Build
 
 on:
   push:
+    branches: [main]
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
   schedule:
     # Weekly, to notice when a new ESPHome release breaks the config
     - cron: "17 4 * * 1"
   workflow_dispatch:
 
+# A new push to a pull request cancels its outdated run; runs on main finish
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
+    # Draft pull requests do not build; "Ready for review" starts the run
+    if: ${{ !github.event.pull_request.draft }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
