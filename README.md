@@ -325,8 +325,9 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 
 <div align="center">
 
-**Made by the open source community**
+⭐ Like the ESP32-C6 Zigbee Router? A [star on GitHub](https://github.com/firsttris/esp32c6-zigbee-router) helps others find it.<br>
+🐛 [Report a bug](https://github.com/firsttris/esp32c6-zigbee-router/issues/new) · 💡 [Request a feature](https://github.com/firsttris/esp32c6-zigbee-router/issues/new)
 
-⭐ Star us on [GitHub](https://github.com/firsttris/esp32c6-zigbee-router) • 🐛 [Report a Bug](https://github.com/firsttris/esp32c6-zigbee-router/issues) • 💡 [Request a Feature](https://github.com/firsttris/esp32c6-zigbee-router/issues)
+<sub>License: <a href="LICENSE">MIT</a> · © Tristan Teufel and contributors</sub>
 
 </div>
