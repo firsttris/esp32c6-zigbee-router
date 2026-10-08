@@ -1,10 +1,19 @@
 name: Build
 
+# Changes to documentation alone don't build.
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
   pull_request:
     types: [opened, synchronize, reopened, ready_for_review]
+    paths-ignore:
+      - "**.md"
+      - "docs/**"
+      - "LICENSE"
   schedule:
     # Weekly, to notice when a new ESPHome release breaks the config
     - cron: "17 4 * * 1"
