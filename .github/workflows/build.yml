@@ -33,24 +33,49 @@ jobs:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-python@v5
+        id: python
         with:
           python-version: "3.12"
 
+      # ESPHome is not pinned, so the pip cache rolls over weekly to pick up
+      # new releases; it saves downloading and building the wheels
+      - name: Get week
+        id: week
+        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: pip-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ steps.week.outputs.week }}
+          restore-keys: pip-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-
+
       - name: Install ESPHome
-        run: pip install esphome
+        id: esphome
+        run: |
+          pip install esphome
+          echo "version=$(esphome version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
       - name: Validate config
         run: esphome config esp32-c6-zigbee-router.yaml
 
-      # ESP-IDF and toolchains are downloaded to ~/.cache/esphome
+      # ESP-IDF, toolchains and the IDF Python env are downloaded to
+      # ~/.cache/esphome (no PlatformIO). That env links to the runner's
+      # Python, so the key includes the Python and ESPHome version.
       - name: Cache ESPHome toolchain
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.cache/esphome
-            ~/.platformio
-          key: esphome-${{ runner.os }}-${{ hashFiles('esp32-c6-zigbee-router.yaml') }}
-          restore-keys: esphome-${{ runner.os }}-
+          path: ~/.cache/esphome
+          key: esphome-idf-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ steps.esphome.outputs.version }}
+
+      # Build directory (incl. storage JSON, without which ESPHome cleans the
+      # build): ninja then only recompiles what changed
+      - name: Cache build directory
+        uses: actions/cache@v4
+        with:
+          path: .esphome
+          key: esphome-build-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ steps.esphome.outputs.version }}-${{ hashFiles('esp32-c6-zigbee-router.yaml') }}
+          restore-keys: esphome-build-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ steps.esphome.outputs.version }}-
 
       - name: Compile firmware
         run: esphome compile esp32-c6-zigbee-router.yaml
