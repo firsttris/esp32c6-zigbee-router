@@ -268,6 +268,25 @@ You should see:
 
 ---
 
+## 📈 Did It Actually Fix Your Dead Spot?
+
+The Zigbee2MQTT map is a snapshot: it tells you the link quality right now, not whether the
+basement sensor is better off this week than last week. [Funkloch](https://github.com/firsttris/funkloch)
+(German for *dead spot*) records the signal of every Zigbee2MQTT device over days and weeks, so
+you can see what your new router really changed:
+
+- **Before and after**: the link quality of the devices around the ESP32-C6 as a history, not a
+  single number.
+- **Who routes through it**: the network map shows which devices picked the router as their parent.
+- **Placement check**: move the router, wait a day, compare. No more guessing.
+- **Early warning**: a traffic light and trend per device, and a notification (ntfy, webhook,
+  MQTT) when one drops out.
+
+One Docker container next to Zigbee2MQTT, read-only, no cloud:
+[installation guide](https://firsttris.github.io/funkloch/installation.html).
+
+---
+
 ## 🔘 Re-pair / Factory Reset
 
 To move the router to another network, or if it doesn't rejoin:
@@ -342,6 +361,7 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 | 🏠 [Home Assistant Zigbee Integration](https://www.home-assistant.io/integrations/zha/) | How Zigbee works in Home Assistant |
 | 📡 [Zigbee2MQTT](https://www.zigbee2mqtt.io/) | Alternative Zigbee bridge |
 | 🧵 [ESP32-C6 Thread Router](https://github.com/firsttris/esp32c6-thread-router) | The same board as a Thread router |
+| 📈 [Funkloch](https://github.com/firsttris/funkloch) | Signal history, network map and alerts for Zigbee2MQTT and Thread devices |
 
 ---
 
