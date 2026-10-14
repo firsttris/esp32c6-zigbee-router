@@ -9,6 +9,8 @@
 [![ESPHome](https://img.shields.io/badge/ESPHome-2026.5%2B-blue?logo=esphome)](https://esphome.io/components/zigbee/)
 [![Zigbee](https://img.shields.io/badge/Zigbee-3.0-green)](https://csa-iot.org/all-solutions/zigbee/)
 [![Home Assistant](https://img.shields.io/badge/Home%20Assistant-Integration-41BDF5?logo=homeassistant)](https://www.home-assistant.io/)
+[![Build](https://github.com/firsttris/esp32c6-zigbee-router/actions/workflows/build.yml/badge.svg)](https://github.com/firsttris/esp32c6-zigbee-router/actions/workflows/build.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 This ESPHome configuration turns an ESP32-C6 board into a Zigbee router that seamlessly integrates with your Zigbee network to expand coverage and improve connectivity for your Zigbee devices.
 
