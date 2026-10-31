@@ -33,7 +33,7 @@ This ESPHome configuration turns a ~5 € ESP32-C6 board into a **Zigbee 3.0 rou
 |-------------|-------------|
 | **🔧 Hardware** | ESP32-C6 board (tested with [Seeed Studio XIAO ESP32C6](https://www.seeedstudio.com/Seeed-Studio-XIAO-ESP32C6-p-5884.html)) |
 | **🌐 Network** | Zigbee Coordinator in your network (e.g., Home Assistant with Zigbee2MQTT or ZHA) |
-| **💻 Software** | ESPHome **2026.5 or newer** (native Zigbee component) |
+| **💻 Software** | ESPHome **2026.5 or newer** (native Zigbee component). CI builds with the release pinned in [`requirements.txt`](requirements.txt) (`pip install -r requirements.txt`), and `docker-compose.yml` runs the same one; Renovate updates both |
 | **🔌 Cable** | USB cable for initial flashing |
 | **📦 Optional** | 3D-printed case - [XIAO ESP32-C6 Case](https://www.printables.com/model/1543275-xiao-esp32-c6-zigbee-router-case-split-lid-sma-ext) |
 
@@ -137,7 +137,7 @@ docker compose restart
 
 ```bash
 podman run --rm --security-opt label=disable -v "$PWD":/config \
-  --device /dev/ttyACM0 ghcr.io/esphome/esphome:stable \
+  --device /dev/ttyACM0 ghcr.io/esphome/esphome:2026.10.1 \
   run esp32-c6-zigbee-router.yaml --device /dev/ttyACM0
 ```
 
@@ -371,6 +371,7 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 ├── .github/workflows/build.yml     # CI: validates and compiles the config
 ├── .gitignore                      # Excludes secrets and build artifacts
 ├── docker-compose.yml              # Docker/Podman setup for ESPHome
+├── requirements.txt                # The pinned ESPHome release (CI, pip)
 ├── LICENSE                         # MIT license
 ├── zigbee-router-image.jpg         # Image used in this README
 └── README.md                       # This file

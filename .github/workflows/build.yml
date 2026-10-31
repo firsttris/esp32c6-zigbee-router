@@ -14,9 +14,6 @@ on:
       - "**.md"
       - "docs/**"
       - "LICENSE"
-  schedule:
-    # Weekly, to notice when a new ESPHome release breaks the config
-    - cron: "17 4 * * 1"
   workflow_dispatch:
 
 # A new push to a pull request cancels its outdated run; runs on main finish
@@ -37,23 +34,19 @@ jobs:
         with:
           python-version: "3.12"
 
-      # ESPHome is not pinned, so the pip cache rolls over weekly to pick up
-      # new releases; it saves downloading and building the wheels
-      - name: Get week
-        id: week
-        run: echo "week=$(date -u +%G-%V)" >> "$GITHUB_OUTPUT"
-
+      # ESPHome is pinned in requirements.txt; the cache saves downloading and
+      # building the wheels and rolls over with a new pin
       - name: Cache pip
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: pip-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ steps.week.outputs.week }}
+          key: pip-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-${{ hashFiles('requirements.txt') }}
           restore-keys: pip-${{ runner.os }}-py${{ steps.python.outputs.python-version }}-
 
       - name: Install ESPHome
         id: esphome
         run: |
-          pip install esphome
+          pip install -r requirements.txt
           echo "version=$(esphome version | awk '{print $2}')" >> "$GITHUB_OUTPUT"
 
       - name: Validate config

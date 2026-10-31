@@ -1,7 +1,7 @@
 services:
   esphome:
     container_name: esphome
-    image: ghcr.io/esphome/esphome:stable
+    image: ghcr.io/esphome/esphome:2026.10.1
     volumes:
       # This repository is mounted as /config
       - ./:/config
