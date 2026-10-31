@@ -1,0 +1,3 @@
+# The ESPHome release CI builds with; docker-compose.yml runs the same one.
+# Renovate moves both in one pull request (.github/renovate.json5).
+esphome==2026.10.1
