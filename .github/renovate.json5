@@ -47,8 +47,9 @@
     {
       // The Python of the workflows (setup-python): ESPHome 2026.10.1 declares
       // requires_python "<3.15,>=3.12.0" (PyPI), so pip cannot install it on 3.15. Drop this rule
-      // once an ESPHome release supports Python 3.15.
-      matchPackageNames: ["python"],
+      // once an ESPHome release supports Python 3.15. (Matched by depName: setup-python's package
+      // is actions/python-versions.)
+      matchDepNames: ["python"],
       allowedVersions: "<3.15",
     },
   ],
