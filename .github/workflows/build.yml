@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-python@v7
         id: python
         with:
-          python-version: "3.12"
+          python-version: "3.14"
 
       # ESPHome is pinned in requirements.txt; the cache saves downloading and
       # building the wheels and rolls over with a new pin
