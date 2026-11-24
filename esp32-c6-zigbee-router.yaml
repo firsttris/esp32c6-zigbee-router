@@ -73,11 +73,13 @@ binary_sensor:
 # ============================================
 # Optional: chip temperature as a Zigbee sensor
 # ============================================
-# Shows up in Zigbee2MQTT/ZHA as an analog input (°C).
+# Shows up in Zigbee2MQTT/ZHA as a temperature sensor.
+# `cluster: device_class` needs ESPHome 2026.10 or newer.
 # Remove and re-add the router in your coordinator after enabling it.
 # sensor:
 #   - platform: internal_temperature
 #     name: Chip Temperature
+#     cluster: device_class
 #     update_interval: 60s
 
 # ============================================
