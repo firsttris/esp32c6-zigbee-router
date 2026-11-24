@@ -35,9 +35,34 @@ This ESPHome configuration turns a ~5 € ESP32-C6 board into a **Zigbee 3.0 rou
 | **🌐 Network** | Zigbee Coordinator in your network (e.g., Home Assistant with Zigbee2MQTT or ZHA) |
 | **💻 Software** | ESPHome **2026.5 or newer** (native Zigbee component). CI builds with the release pinned in [`requirements.txt`](requirements.txt) (`pip install -r requirements.txt`), and `docker-compose.yml` runs the same one; Renovate updates both |
 | **🔌 Cable** | USB cable for initial flashing |
-| **📦 Optional** | 3D-printed case - [XIAO ESP32-C6 Case](https://www.printables.com/model/1543275-xiao-esp32-c6-zigbee-router-case-split-lid-sma-ext) |
+| **📦 Optional** | 3D-printed case, see [3D-Printed Case](#-3d-printed-case) |
 
 > **💡 Other boards:** The config also works on other ESP32-C6 boards. Change `board:` in `esp32-c6-zigbee-router.yaml` (e.g. `esp32-c6-devkitc-1`) and remove the block marked `Seeed XIAO ESP32C6 specific`, since it drives GPIO3, GPIO9, GPIO14 and GPIO15. ESPHome also supports Zigbee on ESP32-C5 and ESP32-H2. According to the ESPHome docs the ESP32-H2 works more reliably than the ESP32-C6, which is only tested here.
+
+---
+
+## 📦 3D-Printed Case
+
+The case in the picture above is made for the Seeed Studio XIAO ESP32C6 **without pin headers** and an external SMA antenna. It measures 25.8 × 36.5 × 14 mm, snaps together without screws and has a keyhole in the back for wall mounting. Reset and BOOT are reachable with a paper clip through the two larger holes (BOOT is also used to [re-pair](#-re-pair--factory-reset)), and the two smaller holes show the LEDs.
+
+| File | Description |
+|------|-------------|
+| [`xiao-esp32c6-case-base.stl`](case/xiao-esp32c6-case-base.stl) | Base |
+| [`xiao-esp32c6-case-lid.stl`](case/xiao-esp32c6-case-lid.stl) | Lid, already flipped for printing |
+| [`xiao_esp32c6_case.py`](case/xiao_esp32c6_case.py) | Parametric source (Python, `manifold3d`) if you want to change dimensions |
+
+- **Print settings:** PLA, 0.2 mm layers, 2 walls, 15 % infill, no supports
+- **You also need:** a U.FL to SMA bulkhead pigtail (1/4"-36 thread) and a matching 2.4 GHz antenna
+- **Antenna:** The firmware selects the external antenna by default, which matches this case.
+
+<details>
+<summary><b>🔁 Alternative: XIAO ESP32-C6 Case from Printables</b></summary>
+
+The case used here before is larger and leaves more room for the pigtail: [XIAO ESP32-C6 Case](https://www.printables.com/model/1543275-xiao-esp32-c6-zigbee-router-case-split-lid-sma-ext).
+
+<img src="./case/alternative-case.jpg" alt="Seeed XIAO ESP32C6 in the alternative white case from Printables, lid removed" width="400">
+
+</details>
 
 ---
 
@@ -368,6 +393,7 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 .
 ├── esp32-c6-zigbee-router.yaml     # Main ESPHome configuration
 ├── esp32-c6-zigbee-router-2.yaml   # Optional: second router you create (not in git)
+├── case/                           # 3D-printed case (STL files and source)
 ├── .github/workflows/build.yml     # CI: validates and compiles the config
 ├── .gitignore                      # Excludes secrets and build artifacts
 ├── docker-compose.yml              # Docker/Podman setup for ESPHome
