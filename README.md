@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📡 ESP32-C6 Zigbee Router
+# ESP32-C6 Zigbee Router
 
 **Extend Your Zigbee Network Coverage with an Affordable ESP32-C6!**
 
@@ -18,7 +18,7 @@ This ESPHome configuration turns a ~5 € ESP32-C6 board into a **Zigbee 3.0 rou
 
 </div>
 
-## ✨ Features
+## Features
 
 - 📶 **Zigbee router**: extends your Zigbee mesh, no WiFi and no secrets needed
 - 🧩 **Native ESPHome Zigbee**: uses the built-in [`zigbee`](https://esphome.io/components/zigbee/) component (since ESPHome 2026.5), no external component
@@ -27,7 +27,7 @@ This ESPHome configuration turns a ~5 € ESP32-C6 board into a **Zigbee 3.0 rou
 - 🔘 **Re-pair with the BOOT button**: hold it for 5 seconds to leave the network, no reflashing needed
 - 💡 **Status LED**: blinks when something is wrong
 
-## 📋 Prerequisites
+## Prerequisites
 
 | Requirement | Description |
 |-------------|-------------|
@@ -35,15 +35,15 @@ This ESPHome configuration turns a ~5 € ESP32-C6 board into a **Zigbee 3.0 rou
 | **🌐 Network** | Zigbee Coordinator in your network (e.g., Home Assistant with Zigbee2MQTT or ZHA) |
 | **💻 Software** | ESPHome **2026.5 or newer** (native Zigbee component). CI builds with the release pinned in [`requirements.txt`](requirements.txt) (`pip install -r requirements.txt`), and `docker-compose.yml` runs the same one; Renovate updates both |
 | **🔌 Cable** | USB cable for initial flashing |
-| **📦 Optional** | 3D-printed case, see [3D-Printed Case](#-3d-printed-case) |
+| **📦 Optional** | 3D-printed case, see [3D-Printed Case](#3d-printed-case) |
 
 > **💡 Other boards:** The config also works on other ESP32-C6 boards. Change `board:` in `esp32-c6-zigbee-router.yaml` (e.g. `esp32-c6-devkitc-1`) and remove the block marked `Seeed XIAO ESP32C6 specific`, since it drives GPIO3, GPIO9, GPIO14 and GPIO15. ESPHome also supports Zigbee on ESP32-C5 and ESP32-H2. According to the ESPHome docs the ESP32-H2 works more reliably than the ESP32-C6, which is only tested here.
 
 ---
 
-## 📦 3D-Printed Case
+## 3D-Printed Case
 
-The case in the picture above is made for the Seeed Studio XIAO ESP32C6 **without pin headers** and an external SMA antenna. It measures 25.8 × 36.5 × 14 mm, snaps together without screws and has a keyhole in the back for wall mounting. Reset and BOOT are reachable with a paper clip through the two larger holes (BOOT is also used to [re-pair](#-re-pair--factory-reset)), and the two smaller holes show the LEDs.
+The case in the picture above is made for the Seeed Studio XIAO ESP32C6 **without pin headers** and an external SMA antenna. It measures 25.8 × 36.5 × 14 mm, snaps together without screws and has a keyhole in the back for wall mounting. Reset and BOOT are reachable with a paper clip through the two larger holes (BOOT is also used to [re-pair](#re-pair--factory-reset)), and the two smaller holes show the LEDs.
 
 | File | Description |
 |------|-------------|
@@ -66,7 +66,7 @@ The case used here before is larger and leaves more room for the pigtail: [XIAO 
 
 ---
 
-## 🔑 How does it work?
+## How does it work?
 
 A Zigbee router is a **mains-powered device** that:
 - ✅ Relays Zigbee signals between devices (mesh network)
@@ -76,7 +76,7 @@ A Zigbee router is a **mains-powered device** that:
 
 The router has no entities of its own. It joins your network as a Zigbee **Range Extender**.
 
-## 🚀 Installation
+## Installation
 
 ### 📝 Step 1: Configure Settings (Optional)
 
@@ -244,7 +244,7 @@ After flashing is complete, enable pairing mode on your Zigbee Coordinator:
 
 ---
 
-## ⬆️ Upgrading from an Older Version
+## Upgrading from an Older Version
 
 Older versions of this repository used the external [`luar123/zigbee_esphome`](https://github.com/luar123/zigbee_esphome) component and a custom `partitions_zb.csv`. Both are gone now, ESPHome ships Zigbee natively. The Zigbee stack and the partition layout changed, so the router has to be paired again:
 
@@ -258,7 +258,7 @@ Older versions of this repository used the external [`luar123/zigbee_esphome`](h
 
 ---
 
-## ✅ Verification & Testing
+## Verification & Testing
 
 ### 🔍 Check if Zigbee Router is working:
 
@@ -293,7 +293,7 @@ You should see:
 
 ---
 
-## 📈 Did It Actually Fix Your Dead Spot?
+## Did It Actually Fix Your Dead Spot?
 
 The Zigbee2MQTT map is a snapshot: it tells you the link quality right now, not whether the
 basement sensor is better off this week than last week. [Funkloch](https://github.com/firsttris/funkloch)
@@ -312,7 +312,7 @@ One Docker container next to Zigbee2MQTT, read-only, no cloud:
 
 ---
 
-## 🔘 Re-pair / Factory Reset
+## Re-pair / Factory Reset
 
 To move the router to another network, or if it doesn't rejoin:
 
@@ -326,7 +326,7 @@ The router leaves the network, clears its Zigbee data and pairs again. Your ESPH
 
 ---
 
-## ⚙️ Advanced Options
+## Advanced Options
 
 ### 🌡️ Chip Temperature over Zigbee
 
@@ -340,7 +340,7 @@ If you want OTA updates via WiFi anyway, uncomment the `wifi:` and `ota:` blocks
 
 ---
 
-## ❓ FAQ
+## FAQ
 
 ### Can the ESP32-C6 be a Zigbee coordinator?
 
@@ -356,7 +356,7 @@ It has no WiFi, so the ESPHome dashboard only lists it as offline and the ESPHom
 
 ### ESP32-C6 or ESP32-H2?
 
-Both work with ESPHome's Zigbee component, and so does the ESP32-C5. According to the [ESPHome docs](https://esphome.io/components/zigbee/) the ESP32-H2 works more reliably than the ESP32-C6. This config is only tested on the ESP32-C6, see [Other boards](#-prerequisites).
+Both work with ESPHome's Zigbee component, and so does the ESP32-C5. According to the [ESPHome docs](https://esphome.io/components/zigbee/) the ESP32-H2 works more reliably than the ESP32-C6. This config is only tested on the ESP32-C6, see [Other boards](#prerequisites).
 
 ### Can the same board run Zigbee and Thread (Matter) at the same time?
 
@@ -364,7 +364,7 @@ No. The ESP32-C6 has one 802.15.4 radio, and a firmware uses it for either Zigbe
 
 ---
 
-## 🔄 Multiple Zigbee Routers
+## Multiple Zigbee Routers
 
 To flash multiple ESP32-C6 devices and use them as separate routers in the same Zigbee network, create a small file per additional device (e.g. `esp32-c6-zigbee-router-2.yaml`) that reuses the main config:
 
@@ -387,7 +387,7 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 
 ---
 
-## 📂 File Structure
+## File Structure
 
 ```
 .
@@ -405,7 +405,7 @@ Each device joins the same Zigbee network and acts as an independent router, ext
 
 ---
 
-## 📚 Further Resources
+## Further Resources
 
 | Resource | Description |
 |----------|-------------|
