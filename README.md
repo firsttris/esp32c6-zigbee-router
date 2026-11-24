@@ -240,11 +240,19 @@ After flashing is complete, enable pairing mode on your Zigbee Coordinator:
 
 > **💡 Note:** If the logs repeat `Failed to join network with status(0x03)` every few seconds, the router doesn't find a network that accepts new devices. Enable pairing mode on the coordinator. The router keeps retrying and joins within seconds.
 
+> **💡 Too far away?** Since 2026.7 ESPHome only joins over links with an LQI of at least **32**. If the router doesn't join at its final place, try pairing it closer to the coordinator or another router, and check the [antenna setting](#-step-2-choose-the-antenna-seeed-xiao-esp32c6-only).
+
 > **❓ Why don't I see it in ESPHome?** The router has no WiFi, so it never shows up in the ESPHome dashboard (only as offline) or in the ESPHome integration of Home Assistant. You find it in Zigbee2MQTT or ZHA.
 
 ---
 
 ## Upgrading from an Older Version
+
+### From ESPHome 2026.5 or 2026.6
+
+ESPHome 2026.7 moved the Zigbee data to another place in the flash ([esphome#16869](https://github.com/esphome/esphome/pull/16869)). When you update from 2026.5 or 2026.6 to 2026.7 or newer, the router has to be paired again: remove it from Zigbee2MQTT/ZHA, flash the new firmware and continue with Step 4. If it doesn't join, erase the flash first as described below.
+
+### From the `luar123/zigbee_esphome` component
 
 Older versions of this repository used the external [`luar123/zigbee_esphome`](https://github.com/luar123/zigbee_esphome) component and a custom `partitions_zb.csv`. Both are gone now, ESPHome ships Zigbee natively. The Zigbee stack and the partition layout changed, so the router has to be paired again:
 
@@ -330,7 +338,7 @@ The router leaves the network, clears its Zigbee data and pairs again. Your ESPH
 
 ### 🌡️ Chip Temperature over Zigbee
 
-The native component can expose ESPHome sensors to your coordinator. Uncomment the `sensor:` block in `esp32-c6-zigbee-router.yaml` to get the chip temperature in Zigbee2MQTT/ZHA. After adding or removing sensors, remove the router from your coordinator and pair it again (Zigbee2MQTT: also re-interview it). Use Zigbee2MQTT **2.8.0 or newer**.
+The native component can expose ESPHome sensors to your coordinator. Uncomment the `sensor:` block in `esp32-c6-zigbee-router.yaml` to get the chip temperature in Zigbee2MQTT/ZHA. It uses `cluster: device_class` and shows up as a regular temperature sensor, which needs ESPHome **2026.10 or newer**. After adding or removing sensors, remove the router from your coordinator and pair it again (Zigbee2MQTT: also re-interview it). Use Zigbee2MQTT **2.8.0 or newer**.
 
 ### 📶 WiFi (not recommended)
 
@@ -349,6 +357,10 @@ No. It joins an existing Zigbee network as a router, so you still need a coordin
 ### Zigbee repeater, router or range extender: what's the difference?
 
 None here. A Zigbee *repeater* or *range extender* is a router without a function of its own. This one joins as a Zigbee **Range Extender** and relays traffic for all other devices.
+
+### How many devices can connect to the router?
+
+Up to **10 end devices** as direct children. ESPHome sets this limit and has no option for it. If you need more, add [another router](#multiple-zigbee-routers).
 
 ### Why doesn't the router show up in ESPHome?
 
