@@ -162,7 +162,7 @@ docker compose restart
 
 ```bash
 podman run --rm --security-opt label=disable -v "$PWD":/config \
-  --device /dev/ttyACM0 ghcr.io/esphome/esphome:2026.10.2 \
+  --device /dev/ttyACM0 ghcr.io/esphome/esphome:2026.11.0 \
   run esp32-c6-zigbee-router.yaml --device /dev/ttyACM0
 ```
 
